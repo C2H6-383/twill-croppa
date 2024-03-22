@@ -46,6 +46,6 @@ class TwillCroppaServiceProvider extends ServiceProvider
         // publishes the config files
         $this->publishes([
             __DIR__ . '/../config/twillcroppa.php' => config_path('twillcroppa.php'),
-        ]);
+        ],"twillcroppa-config");
     }
 }

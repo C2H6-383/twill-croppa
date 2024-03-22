@@ -15,17 +15,9 @@ class TwillCroppaServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
-        $this->mergeConfigFrom(
-            __DIR__ . '/../config/croppa.php',
-            'croppa'
-        );
-
-        $this->mergeConfigFrom(
-            __DIR__ . '/../config/twillcroppa.php',
-            'twillcroppa'
-        );
+        $this->mergeConfigs();
     }
 
     /**
@@ -33,6 +25,49 @@ class TwillCroppaServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->publishConfig();
+
+        $this->registerEventListeners();
+    }
+    
+    /**
+     * merges all used configs
+     *
+     * @return void
+     */
+    private function mergeConfigs(): void
+    {
+        // merge croppa default config values
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/croppa.php',
+            'croppa'
+        );
+
+        // merge twill-croppa config values
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/twillcroppa.php',
+            'twillcroppa'
+        );
+    }
+
+    private function publishConfig(): void
+    {
+        // publishes the config files
+        $this->publishes([
+            __DIR__ . '/../config/twillcroppa.php' => config_path('twillcroppa.php'),
+        ], "twillcroppa-config");
+    }
+    
+    /**
+     * registers the media deletion event listerners if needed
+     *
+     * @return void
+     */
+    private function registerEventListeners(): void
+    {
+        // if this plugin is not used as rendering service, do not listen for any events
+        if (config("twill.media_library.image_service", null) != TwillCroppa::class) return;
+
         // prepare the media path for the following event listener
         $path = config("twillcroppa.media_files_path", "storage/uploads/");
         $path = sanitize_media_path($path);
@@ -41,11 +76,5 @@ class TwillCroppaServiceProvider extends ServiceProvider
         Event::listen('eloquent.deleting: ' . Media::class, function ($record) use ($path) {
             Croppa::delete($path . $record->uuid);
         });
-
-
-        // publishes the config files
-        $this->publishes([
-            __DIR__ . '/../config/twillcroppa.php' => config_path('twillcroppa.php'),
-        ],"twillcroppa-config");
     }
 }

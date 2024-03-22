@@ -8,6 +8,9 @@ use Bkwld\Croppa\Facades\Croppa;
 use Illuminate\Support\Facades\Log;
 use Nette\NotImplementedException;
 
+/**
+ * uses Croppa for rendering Twill media images.
+ */
 class TwillCroppa implements ImageServiceInterface
 {
     use ImageServiceDefaults;
@@ -22,6 +25,7 @@ class TwillCroppa implements ImageServiceInterface
 
     public function getUrlWithCrop($id, array $crop_params, array $params = [])
     {
+        // convert the Twill crop params into the Croppa format
         $trim_params = [
             "x1" => $crop_params["crop_x"],
             "y1" => $crop_params["crop_y"],
@@ -54,6 +58,7 @@ class TwillCroppa implements ImageServiceInterface
         $target_width = $params["w"] ?? null;
         $target_height = $params["h"] ?? null;
 
+        // set the quality really low
         $additional_params = ["quality" => config("twillcroppa.lqip_quality", 25)];
 
         return $this->croppaUrl($id, $target_width, $target_height, $additional_params);
@@ -93,12 +98,18 @@ class TwillCroppa implements ImageServiceInterface
         return Croppa::url($this->path($id));
     }
 
-    private function croppaUrl($id, int|null $target_width, int|null $target_height, array $additional_params = [])
+    private function croppaUrl($id, int|null $target_width, int|null $target_height, array $additional_params = []): string
     {
         return url(Croppa::url($this->path($id), $target_width, $target_height, $additional_params));
     }
 
-    private function path($id)
+    /**
+     * returns the path to the image for appending to the app base url.
+     *
+     * @param  mixed $id
+     * @return string
+     */
+    private function path($id): string
     {
         $path = config("twillcroppa.media_files_path", "storage/uploads/");
         $path = sanitize_media_path($path);
@@ -106,6 +117,12 @@ class TwillCroppa implements ImageServiceInterface
         return $path . $id;
     }
 
+    /**
+     * checks if there ar any sizes set in the parameters array
+     *
+     * @param  array $params
+     * @return bool
+     */
     private function sizeMissing(array $params): bool
     {
         return empty($params["w"]) && empty($params["h"]);

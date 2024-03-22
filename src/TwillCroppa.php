@@ -49,14 +49,12 @@ class TwillCroppa implements ImageServiceInterface
     public function getLQIPUrl($id, array $params = [])
     {
         if ($this->sizeMissing($params))
-            // TODO ALLOW TO CHANGE PER CONFIG
-            $params["h"] = $params["w"] = 30;
+            $params["h"] = $params["w"] = config("croppa.lqip_dimension", 30);
 
         $target_width = $params["w"] ?? null;
         $target_height = $params["h"] ?? null;
 
-        // TODO ALLOW TO CHANGE PER CONFIG
-        $additional_params = ["quality" => 25];
+        $additional_params = ["quality" => config("croppa.lqip_quality", 25)];
 
         return $this->croppaUrl($id, $target_width, $target_height, $additional_params);
     }
@@ -102,8 +100,10 @@ class TwillCroppa implements ImageServiceInterface
 
     private function path($id)
     {
-        // TODO MAKE PATHING VARIABLE (FROM CONFIG)
-        return "storage/uploads/$id";
+        $path = config("croppa.media_files_path", "storage/uploads/");
+        $path = sanitize_media_path($path);
+
+        return $path . $id;
     }
 
     private function sizeMissing(array $params): bool

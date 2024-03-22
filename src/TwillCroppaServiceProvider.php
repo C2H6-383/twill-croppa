@@ -17,7 +17,10 @@ class TwillCroppaServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/croppa.php',
+            'croppa'
+        );
     }
 
     /**
@@ -25,10 +28,19 @@ class TwillCroppaServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // prepare the media path for the following event listener
+        $path = config("croppa.media_files_path", "storage/uploads/");
+        $path = sanitize_media_path($path);
+
         // Listen for Media deletion events and remove croppa crops of the file
-        Event::listen('eloquent.deleting: ' . Media::class, function ($record) {
-            // TODO MAKE PATHING VARIABLE (FROM CONFIG)
-            Croppa::delete("storage/uploads/" . $record->uuid);
+        Event::listen('eloquent.deleting: ' . Media::class, function ($record) use ($path) {
+            Croppa::delete($path . $record->uuid);
         });
+
+
+        // publishes the config files
+        $this->publishes([
+            __DIR__ . '/../config/croppa.php' => config_path('croppa.php'),
+        ]);
     }
 }

@@ -15,7 +15,10 @@
   "autoload": {
     "psr-4": {
       "C2H6\\TwillCroppa\\": "src/"
-    }
+    },
+    "files": [
+      "src/Utils.php"
+    ]
   },
   "authors": [
     {

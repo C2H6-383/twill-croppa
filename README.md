@@ -1,2 +1,2 @@
 # twill-croppa
-Use Croppa as media rendering service in twill applications
+Use Croppa as media rendering service in Twill applications.

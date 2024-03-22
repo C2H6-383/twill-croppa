@@ -1,0 +1,44 @@
+{
+  "name": "c2h6/twill-croppa",
+  "description": "Use Croppa as media rendering service in Twill applications",
+  "keywords": [
+    "croppa",
+    "twill",
+    "laravel",
+    "image",
+    "media",
+    "twillcms"
+  ],
+  "type": "library",
+  "license": "MIT",
+  "homepage": "https://github.com/C2H6-383/twill-croppa",
+  "autoload": {
+    "psr-4": {
+      "C2H6\\TwillCroppa\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Ethan Finley",
+      "email": "info@ethan-finley.de",
+      "homepage": "https://ethan-finley.de"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": "^8.2|^8.3",
+    "illuminate/support": "^10.0",
+    "area17/twill": "^3.0",
+    "bkwld/croppa": "^6.0"
+  },
+  "require-dev": {
+    "orchestra/testbench": "8.x-dev"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "C2H6\\TwillCroppa\\TwillCroppaServiceProvider"
+      ]
+    }
+  }
+}

@@ -6,7 +6,7 @@ use A17\Twill\Services\MediaLibrary\ImageServiceDefaults;
 use A17\Twill\Services\MediaLibrary\ImageServiceInterface;
 use Bkwld\Croppa\Facades\Croppa;
 use Illuminate\Support\Facades\Log;
-use Rector\Exception\NotImplementedYetException;
+use Nette\NotImplementedException;
 
 class TwillCroppa implements ImageServiceInterface
 {
@@ -41,7 +41,7 @@ class TwillCroppa implements ImageServiceInterface
     {
         // todo
         dump($id, $cropParams, $width, $height, $params);
-        throw new NotImplementedYetException("This function is not implemented yet.");
+        throw new NotImplementedException("This function is not implemented yet.");
 
         return $this->getUrlWithCrop($id, $cropParams, ["w" => $width, "h" => $height, ...$params]);
     }

@@ -7,7 +7,7 @@ return [
     | CONFIGURATION FOR CROPPA
     |
     | All other configuration options are available from the bkwld/croppa package. 
-    | Use the vendor:publish artisan command to publish this config file.
+    | Use the 'vendor:publish --tag=croppa-config' command to publish this config file.
     |-----------------------------------------------------------------------------
     */
 

@@ -34,9 +34,6 @@
     "area17/twill": "^3.0",
     "bkwld/croppa": "^6.0"
   },
-  "require-dev": {
-    "orchestra/testbench": "8.x-dev"
-  },
   "extra": {
     "laravel": {
       "providers": [

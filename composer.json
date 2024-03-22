@@ -40,5 +40,12 @@
         "C2H6\\TwillCroppa\\TwillCroppaServiceProvider"
       ]
     }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "10.5.x-dev",
+    "orchestra/testbench": "8.x-dev"
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit"
   }
 }

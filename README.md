@@ -1,7 +1,5 @@
 # twill-croppa
 
-Add some badges and more
-
 Add links to croppa, twill cms, croppa config, default package croppa config, twill cms media docs ...
 
 Use Croppa as media rendering service in Twill applications.
@@ -9,6 +7,8 @@ Use Croppa as media rendering service in Twill applications.
 Learn more about Croppa:
 
 Learn more about Twill CMS:
+
+## About this package
 
 ![](https://img.shields.io/github/license/C2H6-383/twill-croppa.svg)
 ![](https://img.shields.io/github/realese/C2H6-383/twill-croppa.svg)
@@ -22,8 +22,6 @@ Learn more about Twill CMS:
 
 ![](https://img.shields.io/packagist/v/c2h6/twill-croppa.svg)
 ![](https://img.shields.io/packagist/dt/c2h6/twill-croppa.svg)
-
-## About this package
 
 This package provides an easy-to-use integration of the Croppa image library into Twill CMS to use as a media and image rendering provider.
 When switching to the provided rendering service, the advantages of Croppa can be used in your Twill application. In addition, a few other utils for working with media in the context of Twill are offered.
@@ -79,7 +77,18 @@ This library automatically configures some croppa parameters. To further refine 
 
 ## Extra: Media Detaching on Model deletion
 
-TODO
+When dealing with Media Models when working with Twill there is often the burden to detach any media when deleting a model. Otherwise, there are some dangling references remaining and any of these media files can never be deleted from the application, as twill registers some usage cases.
+
+To speed this process up, this package contains a few PHP traits to automatically detach any media relations on deleting or force deleting a given model:
+
+`C2H6\TwillCroppa\Traits\DetachMediaOnForceDelete::class` for automatically deleting relations on model force deletion and
+`C2H6\TwillCroppa\Traits\DetachMediaOnDelete::class` for automatically deleting relations on model (soft) deletion.
+
+For normal use cases, only the first one should be needed, as Twill always uses soft deletes per default. On model deletion, the model is put in a Trash section, where a recovery is possible. Only on removal from this Trash section, a media detachment should be done.
+
+### Usage
+
+To use these traits just add them to any of your models and they should work out of the box.
 
 ## Package Development
 

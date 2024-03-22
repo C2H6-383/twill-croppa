@@ -5,6 +5,8 @@ namespace C2H6\TwillCroppa;
 use A17\Twill\Services\MediaLibrary\ImageServiceDefaults;
 use A17\Twill\Services\MediaLibrary\ImageServiceInterface;
 use Bkwld\Croppa\Facades\Croppa;
+use Illuminate\Support\Facades\Log;
+use Rector\Exception\NotImplementedYetException;
 
 class TwillCroppa implements ImageServiceInterface
 {
@@ -12,7 +14,10 @@ class TwillCroppa implements ImageServiceInterface
 
     public function getUrl($id, array $params = [])
     {
-        return url(Croppa::url($this->url($id), $params["w"] ?? null, $params["h"] ?? null));
+        $target_width = $params["w"] ?? null;
+        $target_height = $params["h"] ?? null;
+
+        return $this->croppaUrl($id, $target_width, $target_height);
     }
 
     public function getUrlWithCrop($id, array $crop_params, array $params = [])
@@ -24,20 +29,36 @@ class TwillCroppa implements ImageServiceInterface
             "y2" => $crop_params["crop_y"] + $crop_params["crop_h"],
         ];
 
-        return url(Croppa::url($this->url($id), $params["w"] ?? null, $params["h"] ?? null, ["trim" => $trim_params]));
+        $target_width = $params["w"] ?? null;
+        $target_height = $params["h"] ?? null;
+
+        $additional_params = ["trim" => $trim_params];
+
+        return $this->croppaUrl($id, $target_width, $target_height, $additional_params);
     }
 
     public function getUrlWithFocalCrop($id, array $cropParams, $width, $height, array $params = [])
     {
-        echo '">';
-        dd("focal");
-        dd($id, $params, $cropParams, $width, $height);
+        // todo
+        dump($id, $cropParams, $width, $height, $params);
+        throw new NotImplementedYetException("This function is not implemented yet.");
+
+        return $this->getUrlWithCrop($id, $cropParams, ["w" => $width, "h" => $height, ...$params]);
     }
 
     public function getLQIPUrl($id, array $params = [])
     {
-        if (empty($params["w"]) && empty($params["h"])) $params["h"] = $params["w"] = 30;
-        return url(Croppa::url($this->url($id), $params["w"] ?? null, $params["h"] ?? null, ["quality" => 25]));
+        if ($this->sizeMissing($params))
+            // TODO ALLOW TO CHANGE PER CONFIG
+            $params["h"] = $params["w"] = 30;
+
+        $target_width = $params["w"] ?? null;
+        $target_height = $params["h"] ?? null;
+
+        // TODO ALLOW TO CHANGE PER CONFIG
+        $additional_params = ["quality" => 25];
+
+        return $this->croppaUrl($id, $target_width, $target_height, $additional_params);
     }
 
     public function getSocialUrl($id, array $params = [])
@@ -60,6 +81,8 @@ class TwillCroppa implements ImageServiceInterface
                 'height' => $h,
             ];
         } catch (\Exception $exception) {
+            Log::warning("TwillCroppa Media Service: Could not get media dimensions for media id $id.", ["id" => $id, "exception" => $exception]);
+
             return [
                 'width' => 0,
                 'height' => 0,
@@ -69,11 +92,22 @@ class TwillCroppa implements ImageServiceInterface
 
     public function getRawUrl($id)
     {
-        return Croppa::url($this->url($id));
+        return Croppa::url($this->path($id));
     }
 
-    private function url($id)
+    private function croppaUrl($id, int|null $target_width, int|null $target_height, array $additional_params = [])
     {
+        return url(Croppa::url($this->path($id), $target_width, $target_height, $additional_params));
+    }
+
+    private function path($id)
+    {
+        // TODO MAKE PATHING VARIABLE (FROM CONFIG)
         return "storage/uploads/$id";
+    }
+
+    private function sizeMissing(array $params): bool
+    {
+        return empty($params["w"]) && empty($params["h"]);
     }
 }

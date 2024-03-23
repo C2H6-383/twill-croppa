@@ -43,7 +43,7 @@ class TwillCroppa implements ImageServiceInterface
 
     public function getUrlWithFocalCrop($id, array $cropParams, $width, $height, array $params = [])
     {
-        // todo
+        // todo: focal crop not implemented yet
         dump($id, $cropParams, $width, $height, $params);
         throw new NotImplementedException("This function is not implemented yet.");
 

@@ -8,8 +8,10 @@ Learn more about Twill CMS at https://twillcms.com
 
 ## About this package
 
-![](https://img.shields.io/github/license/C2H6-383/twill-croppa.svg)
+![](https://img.shields.io/github/license/C2H6-383/twill-croppa)
 ![](https://img.shields.io/github/realese/C2H6-383/twill-croppa.svg)
+![](https://img.shields.io/github/release-date/c2h6-383/twill-croppa)
+![](https://img.shields.io/github/commits-since/C2H6-383/twill-croppa/latest.svg)
 ![](https://img.shields.io/github/forks/C2H6-383/twill-croppa.svg)
 ![](https://img.shields.io/github/stars/C2H6-383/twill-croppa.svg)
 ![](https://img.shields.io/github/issues/C2H6-383/twill-croppa.svg)

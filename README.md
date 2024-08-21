@@ -43,6 +43,9 @@ All package releases are available via GitHub and Packagist releases to download
 | Package version         | Croppa version | Twill version | Laravel version |
 | ----------------------- | -------------- | ------------- | --------------- |
 | 1.x _(Current Version)_ | 6.x            | 3.x           | 10.x            |
+| 2.x _(Next Version)_*   | 7.x            | >=3.3           | 11.x            |
+
+**Development of 2.x is halted as there are current package dependency version conflicts between glide (twill dependency) requesting intervention/image v2 and croppa v7 requiring intervention/image v3.**
 
 ## Requirements
 

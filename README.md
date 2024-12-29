@@ -45,7 +45,9 @@ All package releases are available via GitHub and Packagist releases to download
 | 1.x                     | 6.x             | 3.x           | 10.x            |
 | 2.x _(Current Version)_ | 6.x (Patched)\* | 3.4           | 11.x            |
 
-**V2 depends on a forked version of BKWLD/croppa with applied patches to function with Laravel 11 and the newest version of Twill. Twill depends on older versions of packages used by Croppa, resulting in dependency configurations not installable by composer.** The Fork and more information is available at https://github.com/C2H6-383/croppa. As soon, as these dependency conflicts are resolved, twill-croppa will get an update to use the original version of Croppa once more.
+**V2 depends on a forked version of BKWLD/croppa with applied patches to function with Laravel 11 and the newest version of Twill. Twill depends on older versions of packages used by Croppa, resulting in dependency configurations not installable by composer.** 
+
+The Fork and more information is available at https://github.com/C2H6-383/croppa. As soon, as these dependency conflicts are resolved, twill-croppa will get an update to use the original version of Croppa once more.
 
 ## Requirements
 

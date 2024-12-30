@@ -45,9 +45,11 @@ All package releases are available via GitHub and Packagist releases to download
 | 1.x                     | 6.x             | 3.x           | 10.x            |
 | 2.x _(Current Version)_ | 6.x (Patched)\* | 3.4           | 11.x            |
 
-**V2 depends on a forked version of BKWLD/croppa with applied patches to function with Laravel 11 and the newest version of Twill. Twill depends on older versions of packages used by Croppa, resulting in dependency configurations not installable by composer.** 
-
-The Fork and more information is available at https://github.com/C2H6-383/croppa. As soon, as these dependency conflicts are resolved, twill-croppa will get an update to use the original version of Croppa once more.
+> [!WARNING]
+> 
+> **V2 depends on a forked version of BKWLD/croppa with applied patches to function with Laravel 11 and the newest version of Twill. Twill depends on older versions of packages used by Croppa, resulting in dependency configurations not installable by composer.** 
+> 
+> The Fork and more information is available at https://github.com/C2H6-383/croppa. As soon, as these dependency conflicts are resolved, twill-croppa will get an update to use the original version of Croppa once more.
 
 ## Requirements
 
@@ -62,6 +64,21 @@ Installation of this library is easy to do via `Composer`:
 ```bash
 composer require c2h6/twill-croppa
 ```
+
+> [!IMPORTANT]
+> To use this package in your Laravel project with the patched version of Croppa, you need to add the vsc repository for the patched Croppa version to **your root composer-file** by adding:
+> ```json
+>     "repositories": [
+>        {
+>            "type": "vcs",
+>            "url": "https://github.com/C2H6-383/croppa-twill-compatible"
+>        }
+>    ],
+>    ```
+> 
+> Please run `composer u` to update your packages after that.
+>
+> If you do not need the patched version of Croppa, please use version 1.x of this package.
 
 Package discovery is automatically done by the Laravel Framework.
 
